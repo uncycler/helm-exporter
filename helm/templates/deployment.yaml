@@ -35,8 +35,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.namespaces }}
+          {{- if and .Values.namespaces (not .Values.rbac.clusterWide) }}
           args: ["-namespaces", {{ .Values.namespaces | quote }}]
+          {{- else }}
+          args: ["-namespaces", {{ .Release.Namespace | quote }}]
           {{- end }}
           ports:
             - name: http

@@ -21,6 +21,10 @@ fullnameOverride: ""
 
 rbac:
   create: true
+  # If clusterWide is disabled, the pod will only have access to secrets
+  # in the same namespace where it's installed. This disable the values
+  # namespaces
+  clusterWide: true
 
 serviceAccount:
   # Specifies whether a service account should be created
